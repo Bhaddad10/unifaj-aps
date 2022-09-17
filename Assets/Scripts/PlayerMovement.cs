@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     
     // variável pública para poder inspecionar no unity
     public int coins = 0;
+    public Text finishText; // Elemento de Texto de vitória
 
     private void Start()
     {
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Finish"))
         {
-            
+            finishText.gameObject.SetActive(true);
         }
     }
 
