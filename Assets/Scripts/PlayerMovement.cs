@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10f;
     public float jumpForce = 5f;
     Vector3 posicaoInicial; // posição inicial do player
+    
+    // variável pública para poder inspecionar no unity
+    public int coins = 0;
 
     private void Start()
     {
@@ -51,10 +54,21 @@ public class PlayerMovement : MonoBehaviour
         {
             ResetLevel();
         }
+
+        if (other.CompareTag("Coin"))
+        {
+            GetCoin(other);
+        }
     }
 
     private void ResetLevel()
     {
         transform.position = posicaoInicial;
+    }
+
+    private void GetCoin(GameObject other)
+    {
+        Destroy(other);
+        coins++;
     }
 }
