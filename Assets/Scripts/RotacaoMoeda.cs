@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class RotacaoMoeda : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // Rotaciona a moeda
         transform.Rotate(new Vector3(0, 0, 90 * Time.deltaTime));
     }
 }

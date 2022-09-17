@@ -6,20 +6,12 @@ public class MoverPlataforma : MonoBehaviour
 {
     public float velocidade = 2.0f; // velocidade da plataforma
     public float direcao = 1.0f; // começa positiva
-    float mov;
-    Vector3 posicaoInicial; // posição inicial da plataforma
-    public float positiveRange = 1f, negativeRange = -1f;
+    public float positiveRange = 1f, negativeRange = -1f; // variáveis para início/fim do movimento
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        posicaoInicial = transform.position;
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        mov = velocidade * Time.deltaTime * direcao;
+        // nova posicao de plataforma
+        float mov = velocidade * Time.deltaTime * direcao;
 
         // nova posicao de plataforma no eixo especifico
         float nova_pos = transform.position.x + mov;
@@ -31,7 +23,7 @@ public class MoverPlataforma : MonoBehaviour
         }
         else
         {
-            transform.position += new Vector3(mov, 0, 0);
+            transform.position += new Vector3(mov, 0, 0); // plataforma vai para nova posição
         }
     }
 }
