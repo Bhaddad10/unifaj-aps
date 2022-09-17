@@ -59,6 +59,11 @@ public class PlayerMovement : MonoBehaviour
         {
             GetCoin(other);
         }
+
+        if (other.CompareTag("Finish"))
+        {
+            
+        }
     }
 
     private void ResetLevel()
