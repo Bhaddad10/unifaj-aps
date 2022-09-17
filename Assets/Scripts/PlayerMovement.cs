@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 10f;
     public float jumpForce = 5f;
+    Vector3 posicaoInicial; // posição inicial do player
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        posicaoInicial = transform.position;
     }
     private void Update()
     {
@@ -37,5 +40,21 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded()
     {
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject other = collision.gameObject;
+;
+        if (other.CompareTag("Spike"))
+        {
+            ResetLevel();
+        }
+    }
+
+    private void ResetLevel()
+    {
+        transform.position = posicaoInicial;
     }
 }
