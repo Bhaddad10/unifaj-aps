@@ -17,6 +17,7 @@ public class PlayerControlador: MonoBehaviour
     
     public int coins = 0; // variável pública para poder inspecionar no unity
     public Text finishText; // elemento de texto de vitória
+    public Text coinsText; // elemento de texto de moedas coletadas
 
     private void Start()
     {
@@ -75,6 +76,8 @@ public class PlayerControlador: MonoBehaviour
         // Se for a linha de chegada, exibe texto de finalização da fase
         if (other.CompareTag("Finish"))
         {
+            coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
+            coinsText.gameObject.SetActive(true);
             finishText.gameObject.SetActive(true);
         }
     }
