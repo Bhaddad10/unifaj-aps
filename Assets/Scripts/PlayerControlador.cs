@@ -44,7 +44,7 @@ public class PlayerControlador: MonoBehaviour
         // Se setas esquerda/direita, aplique a alteração de lane
         if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
         if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
-        transform.position = Vector3.Lerp(transform.position, new Vector3(lanes[currentLane], transform.position.y, transform.position.z), .5f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(lanes[currentLane], transform.position.y, transform.position.z), 10f * Time.deltaTime);
 
         //transform.position = new Vector3(lanes[currentLane], transform.position.y, transform.position.z);
 
