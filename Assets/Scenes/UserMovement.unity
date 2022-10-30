@@ -929,6 +929,14 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.015914917
       objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: speed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: coinsText
       value: 

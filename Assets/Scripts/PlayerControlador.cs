@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerControlador: MonoBehaviour
 {
-    Rigidbody rigidbody;
+    Rigidbody _rigidbody;
 
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask ground;
@@ -21,7 +21,7 @@ public class PlayerControlador: MonoBehaviour
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         // armazena posição inicial para possível reset
         posicaoInicial = transform.position;
     }
@@ -32,11 +32,11 @@ public class PlayerControlador: MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        rigidbody.velocity = new Vector3(horizontal * speed, rigidbody.velocity.y, vertical * speed);
+        _rigidbody.velocity = new Vector3(horizontal * speed, _rigidbody.velocity.y, speed);
 
         // Pulo do player
         // Se está pressionando botão de pulo, e não está no chão
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if ((Input.GetButtonDown("Jump") || vertical == 1) && isGrounded())
         {
             jump();
         }
@@ -45,7 +45,7 @@ public class PlayerControlador: MonoBehaviour
     // Método que realiza o pulo do player
     void jump()
     {
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, jumpForce, rigidbody.velocity.z);
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
     // Método retorna se player está no chão
