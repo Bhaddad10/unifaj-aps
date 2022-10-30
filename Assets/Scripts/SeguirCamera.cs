@@ -5,13 +5,19 @@ using UnityEngine;
 public class SeguirCamera : MonoBehaviour
 {
     // Objeto a ser seguido
-    public Transform target;
+    public GameObject targetObject;
     // Variavel para auxiliar a mudança de posição da câmera para melhorar o ângulo
-    public Vector3 offset;
+    private Vector3 offset;
 
+    void Start()
+    {
+        // Salva o offset entre o objeto e a câmera
+        offset = transform.position - targetObject.transform.position;
+    }
+
+    // Atualiza a posição da câmera com base no objeto referenciado
     void Update()
-    { 
-        // Atualiza a posição da câmera com base no objeto referenciado
-        transform.position = target.position + offset;
-    }  
+    {
+        transform.position = targetObject.transform.position + offset;
+    }
 }
