@@ -902,6 +902,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857268, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Height
+      value: 3.6542072
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857268, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Radius
+      value: 0.9079132
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857268, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857268, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Center.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857268, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_Center.z
+      value: 0.015914917
+      objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: coinsText
       value: 
