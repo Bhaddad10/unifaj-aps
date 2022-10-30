@@ -18,6 +18,7 @@ public class SeguirCamera : MonoBehaviour
     // Atualiza a posição da câmera com base no objeto referenciado
     void Update()
     {
-        transform.position = targetObject.transform.position + offset;
+        Vector3 keepX = new Vector3(transform.position.x, targetObject.transform.position.y, targetObject.transform.position.z);
+        transform.position = keepX + offset;
     }
 }
