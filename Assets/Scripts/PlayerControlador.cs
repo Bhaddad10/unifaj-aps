@@ -19,6 +19,10 @@ public class PlayerControlador: MonoBehaviour
     public Text finishText; // elemento de texto de vitória
     public Text coinsText; // elemento de texto de moedas coletadas
 
+
+    private int currentLane = 1;
+    float[] lanes = { -6.5f, 0f, 6.5f };
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -28,18 +32,41 @@ public class PlayerControlador: MonoBehaviour
 
     private void Update()
     {
-        // Movimentação do Player
+        // Movimentação Automática para Frente
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
+
+
+        // Controles
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        _rigidbody.velocity = new Vector3(horizontal * speed, _rigidbody.velocity.y, speed);
+        // Movimentação entre as faixas
+        // Se setas esquerda/direita, aplique a alteração de lane
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
+        if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(lanes[currentLane], transform.position.y, transform.position.z), .5f * Time.deltaTime);
+
+        //transform.position = new Vector3(lanes[currentLane], transform.position.y, transform.position.z);
+
 
         // Pulo do player
-        // Se está pressionando botão de pulo, e não está no chão
+        // Se está pressionando botão de pulo (ou setas para cima), e não está no chão
         if ((Input.GetButtonDown("Jump") || vertical == 1) && isGrounded())
         {
             jump();
         }
+    }
+
+    // Método para evitar que a currentLane ultrapasse os limites (0 e 2)
+    private void ChangeLane(int diff)
+    {
+        // Indo para lane da esquerda
+        if (diff < 0)
+            currentLane = Math.Max(currentLane + diff, 0);
+
+        // Indo para lane da direita
+        if (diff > 0)
+            currentLane = Math.Min(currentLane + diff, 2);
     }
 
     // Método que realiza o pulo do player
