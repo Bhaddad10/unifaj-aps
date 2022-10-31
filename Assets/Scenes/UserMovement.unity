@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130855056}
   m_LocalRotation: {x: 0.11701415, y: -0.00000000854409, z: 0.0000000010066952, w: 0.99313027}
-  m_LocalPosition: {x: 0, y: 10, z: -318.6}
+  m_LocalPosition: {x: 0, y: 10, z: -315.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -931,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: m_Mass
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: speed
@@ -941,6 +941,10 @@ PrefabInstance:
       propertyPath: coinsText
       value: 
       objectReference: {fileID: 821825890}
+    - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: finishText
       value: 
