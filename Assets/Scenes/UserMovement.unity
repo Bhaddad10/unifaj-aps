@@ -931,7 +931,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: m_Mass
-      value: 50
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: speed

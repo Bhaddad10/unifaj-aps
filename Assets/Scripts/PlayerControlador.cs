@@ -50,10 +50,16 @@ public class PlayerControlador: MonoBehaviour
 
 
         // Pulo do player
-        // Se está pressionando botão de pulo (ou setas para cima), e não está no chão
-        if ((Input.GetButtonDown("Jump") || vertical == 1) && isGrounded())
+        // Se está pressionando botão de pulo (ou setas para cima), e está no chão
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded())
         {
             jump();
+        }
+
+        // Se está pressionando seta baixo, e não está no chão
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
+        {
+            _rigidbody.AddForce(new Vector3(0, -15, 0), ForceMode.VelocityChange);
         }
     }
 
@@ -72,7 +78,8 @@ public class PlayerControlador: MonoBehaviour
     // Método que realiza o pulo do player
     void jump()
     {
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
+        //_rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
+        _rigidbody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
     }
 
     // Método retorna se player está no chão
@@ -80,6 +87,15 @@ public class PlayerControlador: MonoBehaviour
     {
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
     }
+
+    private void FixedUpdate()
+    {
+        if (!isGrounded() && _rigidbody.velocity.y <= 0)
+        {
+            _rigidbody.AddForce(new Vector3(0, -.3f, 0), ForceMode.VelocityChange);
+        }
+    }
+
 
 
     private void OnCollisionEnter(Collision collision)
