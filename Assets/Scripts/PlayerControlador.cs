@@ -27,6 +27,7 @@ public class PlayerControlador: MonoBehaviour
     float[] lanes = { -6.5f, 0f, 6.5f };
     
     private bool isDucking = false;
+    public float dashDownAcceleration;
 
     private void Start()
     {
@@ -70,7 +71,7 @@ public class PlayerControlador: MonoBehaviour
         // Se está pressionando seta baixo, e não está no chão
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
-            _rigidbody.AddForce(new Vector3(0, -15, 0), ForceMode.VelocityChange);
+            _rigidbody.AddForce(new Vector3(0, -dashDownAcceleration, 0), ForceMode.VelocityChange);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
