@@ -122,7 +122,7 @@ public class PlayerControlador: MonoBehaviour
 ;
 
         // Se for um espinho, reseta o jogador para posição inicial
-        if (other.CompareTag("Spike"))
+        if (other.CompareTag("Spike") || other.CompareTag("Obstacle"))
         {
             ResetLevel();
         }
