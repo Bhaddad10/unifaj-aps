@@ -25,6 +25,8 @@ public class PlayerControlador: MonoBehaviour
 
     private int currentLane = 1;
     float[] lanes = { -6.5f, 0f, 6.5f };
+    
+    private bool isDucking = false;
 
     private void Start()
     {
@@ -69,6 +71,13 @@ public class PlayerControlador: MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
             _rigidbody.AddForce(new Vector3(0, -15, 0), ForceMode.VelocityChange);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
+        {
+            isDucking = true;
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * .5f, transform.localScale.z);
+            DoGetBackUp(2f);
         }
     }
 
@@ -143,5 +152,21 @@ public class PlayerControlador: MonoBehaviour
     {
         Destroy(other);
         coins++;
+    }
+
+
+    void DoGetBackUp(float delayTime)
+    {
+        StartCoroutine(GetBackUp(delayTime));
+    }
+
+    IEnumerator GetBackUp(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2f, transform.localScale.z);
+        isDucking = false;
     }
 }
