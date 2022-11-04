@@ -12,7 +12,10 @@ public class PlayerControlador: MonoBehaviour
     [SerializeField] LayerMask ground;
 
     public float speed = 10f; // velocidade do player
+    
     public float jumpForce = 5f; // força do pulo
+    public float fallMultiplier = 2.5f;
+
     Vector3 posicaoInicial; // posição inicial do player
     
     public int coins = 0; // variável pública para poder inspecionar no unity
@@ -56,6 +59,12 @@ public class PlayerControlador: MonoBehaviour
             jump();
         }
 
+        // Cair mais rápido
+        if (_rigidbody.velocity.y < 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+
         // Se está pressionando seta baixo, e não está no chão
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
@@ -78,8 +87,7 @@ public class PlayerControlador: MonoBehaviour
     // Método que realiza o pulo do player
     void jump()
     {
-        //_rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
-        _rigidbody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.VelocityChange);
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
     // Método retorna se player está no chão
@@ -88,13 +96,13 @@ public class PlayerControlador: MonoBehaviour
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (!isGrounded() && _rigidbody.velocity.y <= 0)
         {
             _rigidbody.AddForce(new Vector3(0, -.3f, 0), ForceMode.VelocityChange);
         }
-    }
+    }*/
 
 
 

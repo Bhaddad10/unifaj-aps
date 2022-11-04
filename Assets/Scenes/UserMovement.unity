@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2098981634975322051, guid: d3018cedb4ad8a34e9d8e3cde233bb02, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2098981634975322051, guid: d3018cedb4ad8a34e9d8e3cde233bb02, type: 3}
       propertyPath: m_LocalPosition.x
@@ -931,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: m_Mass
-      value: 40
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857269, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: m_UseGravity
@@ -947,7 +947,7 @@ PrefabInstance:
       objectReference: {fileID: 821825890}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: jumpForce
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8083181572489857272, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: finishText
@@ -1604,7 +1604,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2098981634975322051, guid: d3018cedb4ad8a34e9d8e3cde233bb02, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2098981634975322051, guid: d3018cedb4ad8a34e9d8e3cde233bb02, type: 3}
       propertyPath: m_LocalPosition.x
