@@ -39,6 +39,8 @@ public class PlayerControlador: MonoBehaviour
     private bool isDashingDown;
     private int score = 0;
     private int multiplier = 1;
+    
+    public bool isSneakersPowerUpOn;
 
     private void Start()
     {
@@ -157,6 +159,11 @@ public class PlayerControlador: MonoBehaviour
         {
             GetCoin(other);
         }
+
+        if (other.CompareTag("PowerUp"))
+        {
+            GetPowerUp(other);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -200,6 +207,12 @@ public class PlayerControlador: MonoBehaviour
     {
         Destroy(other);
         coins++;
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+    }
+
+    private void GetPowerUp(GameObject other)
+    {
+        other.GetComponent<SneakersPowerUp>().ActivatePowerUp();
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
     }
 

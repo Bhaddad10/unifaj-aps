@@ -10,6 +10,7 @@ public class GameManager : IPersistentSingleton<GameManager>
 {
     public GameObject EndingDialog;
     GameObject InGameInfoDialog;
+    public PlayerControlador player;
 
     public void Init(GameObject newEndingDialog, GameObject newInGameInfoDialog)
     {
