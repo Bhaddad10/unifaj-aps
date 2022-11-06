@@ -27,6 +27,8 @@ public class PlayerControlador: MonoBehaviour
     float[] lanes = { -6.5f, 0f, 6.5f };
     
     private bool isDucking = false;
+    [Range(0.1f, 5f)]
+    public float duckingTime = 1.5f;
     public float dashDownAcceleration;
 
     private void Start()
@@ -78,7 +80,7 @@ public class PlayerControlador: MonoBehaviour
         {
             isDucking = true;
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * .5f, transform.localScale.z);
-            DoGetBackUp(2f);
+            DoGetBackUp(duckingTime);
         }
     }
 
