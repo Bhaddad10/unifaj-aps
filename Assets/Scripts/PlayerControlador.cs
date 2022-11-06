@@ -31,8 +31,19 @@ public class PlayerControlador: MonoBehaviour
     public float duckingTime = 1.5f;
     public float dashDownAcceleration;
 
+    private Vector3 normalScale;
+    private Vector3 normalPosition;
+    private Vector3 targetScale;
+    private Vector3 targetPosition;
+
     private void Start()
     {
+        normalScale = transform.localScale;
+        targetScale = normalScale;
+
+        normalPosition = transform.localPosition;
+        targetPosition = normalPosition;
+
         _rigidbody = GetComponent<Rigidbody>();
         // armazena posição inicial para possível reset
         posicaoInicial = transform.position;
@@ -79,8 +90,15 @@ public class PlayerControlador: MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
         {
             isDucking = true;
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * .5f, transform.localScale.z);
+            targetScale = normalScale * .5f;
+            targetPosition = normalPosition * .5f;
             DoGetBackUp(duckingTime);
+        }
+
+        if (transform.localScale.y != targetScale.y)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, targetScale.y, 10f * Time.deltaTime), transform.localScale.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y, targetPosition.y, 10f * Time.deltaTime), transform.localPosition.z);
         }
     }
 
@@ -169,7 +187,8 @@ public class PlayerControlador: MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         //Do the action after the delay time has finished.
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2f, transform.localScale.z);
+        targetScale = normalScale;
+        targetPosition = normalPosition;
         isDucking = false;
     }
 }
