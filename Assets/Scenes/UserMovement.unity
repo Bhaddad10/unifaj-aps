@@ -1596,6 +1596,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: coinsText
+      value: 
+      objectReference: {fileID: 821825890}
+    - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: finishText
+      value: 
+      objectReference: {fileID: 409556887}
     - target: {fileID: 7229828262933758219, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: coinsText
       value: 

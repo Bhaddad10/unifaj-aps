@@ -143,6 +143,18 @@ public class PlayerControlador: MonoBehaviour
     }
 
 
+    private void OnTriggerEnter(Collider collision)
+    {
+        // Ao collidir trigger com um objeto
+        GameObject other = collision.gameObject;
+
+        // Se for uma moeda, coleta-a
+        if (other.CompareTag("Coin"))
+        {
+            GetCoin(other);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         // Ao colidir com um objeto
@@ -152,12 +164,6 @@ public class PlayerControlador: MonoBehaviour
         if (other.CompareTag("Spike") || other.CompareTag("Obstacle"))
         {
             ResetLevel();
-        }
-
-        // Se for uma moeda, coleta-a
-        if (other.CompareTag("Coin"))
-        {
-            GetCoin(other);
         }
 
         // Se for a linha de chegada, exibe texto de finaliza��o da fase
