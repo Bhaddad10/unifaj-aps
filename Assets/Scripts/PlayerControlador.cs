@@ -46,6 +46,8 @@ public class PlayerControlador: MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         // armazena posi��o inicial para poss�vel reset
         posicaoInicial = transform.position;
+
+        InvokeRepeating("Walk", .25f, .25f);
     }
 
     private void Update()
@@ -73,7 +75,6 @@ public class PlayerControlador: MonoBehaviour
                 GetBackUp();
             }
             isJumping = true;
-            AudioManager.instance.Stop("walk");
         }
 
         // Se est� pressionando seta baixo, e n�o est� no ch�o
@@ -174,11 +175,6 @@ public class PlayerControlador: MonoBehaviour
             coinsText.gameObject.SetActive(true);
             finishText.gameObject.SetActive(true);
         }
-
-        if (other.CompareTag("Ground"))
-        {
-            AudioManager.instance.Play("walk");
-        }
     }
 
     private void ResetLevel()
@@ -212,5 +208,11 @@ public class PlayerControlador: MonoBehaviour
         //Do the action after the delay time has finished.
         targetScale = normalScale;
         isDucking = false;
+    }
+
+    void Walk()
+    {
+        if (isGrounded())
+            AudioManager.instance.PlayWalk();
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine.Audio;
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
@@ -72,5 +73,10 @@ public class AudioManager : MonoBehaviour
         {
             new Sound()
         };
+    }
+
+    internal void PlayWalk()
+    {
+        Play("FootstepMetal0" + Random.Range(1, 9));
     }
 }
