@@ -13,13 +13,13 @@ public class PlayerControlador: MonoBehaviour
 
     public float speed = 10f; // velocidade do player
     
-    public float jumpForce = 5f; // força do pulo
+    public float jumpForce = 5f; // forï¿½a do pulo
     public float fallMultiplier = 2.5f;
 
-    Vector3 posicaoInicial; // posição inicial do player
+    Vector3 posicaoInicial; // posiï¿½ï¿½o inicial do player
     
-    public int coins = 0; // variável pública para poder inspecionar no unity
-    public Text finishText; // elemento de texto de vitória
+    public int coins = 0; // variï¿½vel pï¿½blica para poder inspecionar no unity
+    public Text finishText; // elemento de texto de vitï¿½ria
     public Text coinsText; // elemento de texto de moedas coletadas
 
 
@@ -35,6 +35,7 @@ public class PlayerControlador: MonoBehaviour
     private Vector3 normalPosition;
     private Vector3 targetScale;
     private Vector3 targetPosition;
+    private IEnumerator getBackUpCoroutine;
 
     private void Start()
     {
@@ -45,13 +46,13 @@ public class PlayerControlador: MonoBehaviour
         targetPosition = normalPosition;
 
         _rigidbody = GetComponent<Rigidbody>();
-        // armazena posição inicial para possível reset
+        // armazena posiï¿½ï¿½o inicial para possï¿½vel reset
         posicaoInicial = transform.position;
     }
 
     private void Update()
     {
-        // Movimentação Automática para Frente
+        // Movimentaï¿½ï¿½o Automï¿½tica para Frente
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
 
 
@@ -59,8 +60,8 @@ public class PlayerControlador: MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // Movimentação entre as faixas
-        // Se setas esquerda/direita, aplique a alteração de lane
+        // Movimentaï¿½ï¿½o entre as faixas
+        // Se setas esquerda/direita, aplique a alteraï¿½ï¿½o de lane
         if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
         if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, lanes[currentLane], 10f * Time.deltaTime), transform.position.y, transform.position.z);
@@ -69,19 +70,25 @@ public class PlayerControlador: MonoBehaviour
 
 
         // Pulo do player
-        // Se está pressionando botão de pulo (ou setas para cima), e está no chão
+        // Se estï¿½ pressionando botï¿½o de pulo (ou setas para cima), e estï¿½ no chï¿½o
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded())
         {
+            if (isDucking)
+            {
+                Debug.Log("Jumping when ducking");
+                StopCoroutine(getBackUpCoroutine);
+                GetBackUp();
+            }
             jump();
         }
 
-        // Cair mais rápido
+        // Cair mais rï¿½pido
         if (_rigidbody.velocity.y < 0)
         {
             _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
 
-        // Se está pressionando seta baixo, e não está no chão
+        // Se estï¿½ pressionando seta baixo, e nï¿½o estï¿½ no chï¿½o
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
             _rigidbody.AddForce(new Vector3(0, -dashDownAcceleration, 0), ForceMode.VelocityChange);
@@ -102,7 +109,7 @@ public class PlayerControlador: MonoBehaviour
         }
     }
 
-    // Método para evitar que a currentLane ultrapasse os limites (0 e 2)
+    // Mï¿½todo para evitar que a currentLane ultrapasse os limites (0 e 2)
     private void ChangeLane(int diff)
     {
         // Indo para lane da esquerda
@@ -114,13 +121,13 @@ public class PlayerControlador: MonoBehaviour
             currentLane = Math.Min(currentLane + diff, 2);
     }
 
-    // Método que realiza o pulo do player
+    // Mï¿½todo que realiza o pulo do player
     void jump()
     {
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
-    // Método retorna se player está no chão
+    // Mï¿½todo retorna se player estï¿½ no chï¿½o
     bool isGrounded()
     {
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
@@ -140,9 +147,8 @@ public class PlayerControlador: MonoBehaviour
     {
         // Ao colidir com um objeto
         GameObject other = collision.gameObject;
-;
 
-        // Se for um espinho, reseta o jogador para posição inicial
+        // Se for um espinho, reseta o jogador para posiï¿½ï¿½o inicial
         if (other.CompareTag("Spike") || other.CompareTag("Obstacle"))
         {
             ResetLevel();
@@ -154,7 +160,7 @@ public class PlayerControlador: MonoBehaviour
             GetCoin(other);
         }
 
-        // Se for a linha de chegada, exibe texto de finalização da fase
+        // Se for a linha de chegada, exibe texto de finalizaï¿½ï¿½o da fase
         if (other.CompareTag("Finish"))
         {
             coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
@@ -168,7 +174,7 @@ public class PlayerControlador: MonoBehaviour
         transform.position = posicaoInicial;
     }
 
-    // destrói a moeda e adiciona ao contador de moedas do player
+    // destrï¿½i a moeda e adiciona ao contador de moedas do player
     private void GetCoin(GameObject other)
     {
         Destroy(other);
@@ -178,14 +184,19 @@ public class PlayerControlador: MonoBehaviour
 
     void DoGetBackUp(float delayTime)
     {
-        StartCoroutine(GetBackUp(delayTime));
+        getBackUpCoroutine = GetBackUpEnumerator(delayTime);
+        StartCoroutine(getBackUpCoroutine);
     }
 
-    IEnumerator GetBackUp(float delayTime)
+    IEnumerator GetBackUpEnumerator(float delayTime)
     {
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
+        GetBackUp();
+    }
 
+    void GetBackUp()
+    {
         //Do the action after the delay time has finished.
         targetScale = normalScale;
         targetPosition = normalPosition;
