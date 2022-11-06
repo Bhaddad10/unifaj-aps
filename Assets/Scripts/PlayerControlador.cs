@@ -32,18 +32,14 @@ public class PlayerControlador: MonoBehaviour
     public float dashDownAcceleration;
 
     private Vector3 normalScale;
-    private Vector3 normalPosition;
     private Vector3 targetScale;
-    private Vector3 targetPosition;
+
     private IEnumerator getBackUpCoroutine;
 
     private void Start()
     {
         normalScale = transform.localScale;
         targetScale = normalScale;
-
-        normalPosition = transform.localPosition;
-        targetPosition = normalPosition;
 
         _rigidbody = GetComponent<Rigidbody>();
         // armazena posi��o inicial para poss�vel reset
@@ -98,14 +94,12 @@ public class PlayerControlador: MonoBehaviour
         {
             isDucking = true;
             targetScale = normalScale * .5f;
-            targetPosition = normalPosition * .5f;
             DoGetBackUp(duckingTime);
         }
 
         if (transform.localScale.y != targetScale.y)
         {
             transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, targetScale.y, 10f * Time.deltaTime), transform.localScale.z);
-            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y, targetPosition.y, 10f * Time.deltaTime), transform.localPosition.z);
         }
     }
 
@@ -199,7 +193,6 @@ public class PlayerControlador: MonoBehaviour
     {
         //Do the action after the delay time has finished.
         targetScale = normalScale;
-        targetPosition = normalPosition;
         isDucking = false;
     }
 }
