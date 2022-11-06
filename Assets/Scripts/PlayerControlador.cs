@@ -52,7 +52,6 @@ public class PlayerControlador: MonoBehaviour
         InvokeRepeating("Walk", .25f, .25f);
         InvokeRepeating("ScoreCount", .05f, .05f);
     }
-
     private void Update()
     {
         // Controles
@@ -178,12 +177,22 @@ public class PlayerControlador: MonoBehaviour
             //coinsText.gameObject.SetActive(true);
             //finishText.gameObject.SetActive(true);
             GameManager.Instance.ShowEndingDialog(score, coins);
+            //AudioManager.instance.Play("dieSound");
+            //StartCoroutine(DoPlayDie());
+            //speed = 0;
         }
     }
 
     private void ResetLevel()
     {
-        transform.position = posicaoInicial;
+        //transform.position = posicaoInicial;
+        GameManager.Instance.ShowEndingDialog(score, coins);
+        AudioManager.instance.Play("dieSound");
+        StartCoroutine(DoPlayDie());
+        speed = 0;
+        // stop walk sound
+        CancelInvoke("Walk");
+        CancelInvoke("ScoreCount");
     }
 
     // destr�i a moeda e adiciona ao contador de moedas do player
@@ -225,5 +234,15 @@ public class PlayerControlador: MonoBehaviour
     {
         score += 1;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+    }
+
+    IEnumerator DoPlayDie()
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(1f);
+        AudioManager.instance.Play("die");
+
+        yield return new WaitForSeconds(2f);
+        AudioManager.instance.Play("loose");
     }
 }
