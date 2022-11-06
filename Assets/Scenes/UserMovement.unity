@@ -2887,6 +2887,10 @@ PrefabInstance:
       propertyPath: Visual
       value: 
       objectReference: {fileID: 766690417}
+    - target: {fileID: 1173016227, guid: 0c6b2011b1ad4d344a057ec684165af0, type: 3}
+      propertyPath: jumpBoost
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8981576687822001318, guid: 0c6b2011b1ad4d344a057ec684165af0, type: 3}
       propertyPath: m_RootOrder
       value: 1

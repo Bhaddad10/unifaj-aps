@@ -6,15 +6,15 @@ public class SneakersPowerUp : MonoBehaviour
 {
     [Range(1f, 8f)]
     public float duration = 2f;
-    public float speedBoost;
+    public float jumpBoost;
 
-    private float normalSpeed;
+    private float normalJump;
 
     public GameObject Visual;
 
     private void Start()
     {
-        normalSpeed = GameManager.Instance.player.speed;
+        normalJump = GameManager.Instance.player.jumpForce;
     }
 
     public void ActivatePowerUp()
@@ -23,7 +23,7 @@ public class SneakersPowerUp : MonoBehaviour
             return;
         GameManager.Instance.player.isSneakersPowerUpOn = true;
         Debug.Log("ActivatePowerUp");
-        GameManager.Instance.player.speed = normalSpeed * speedBoost;
+        GameManager.Instance.player.jumpForce = normalJump * jumpBoost;
 
         StartCoroutine(DeactivatePowerUp(duration));
 
@@ -37,7 +37,7 @@ public class SneakersPowerUp : MonoBehaviour
         yield return new WaitForSeconds(durationInSeconds);
 
         Debug.Log("After " + durationInSeconds);
-        GameManager.Instance.player.speed = normalSpeed;
+        GameManager.Instance.player.jumpForce = normalJump;
         GameManager.Instance.player.isSneakersPowerUpOn = false;
         Destroy(gameObject);
     }
