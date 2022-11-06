@@ -73,6 +73,7 @@ public class PlayerControlador: MonoBehaviour
                 GetBackUp();
             }
             isJumping = true;
+            AudioManager.instance.Stop("walk");
         }
 
         // Se est� pressionando seta baixo, e n�o est� no ch�o
@@ -172,6 +173,11 @@ public class PlayerControlador: MonoBehaviour
             coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
             coinsText.gameObject.SetActive(true);
             finishText.gameObject.SetActive(true);
+        }
+
+        if (other.CompareTag("Ground"))
+        {
+            AudioManager.instance.Play("walk");
         }
     }
 
