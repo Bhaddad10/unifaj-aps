@@ -171,9 +171,10 @@ public class PlayerControlador: MonoBehaviour
         // Se for a linha de chegada, exibe texto de finaliza��o da fase
         if (other.CompareTag("Finish"))
         {
-            coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
-            coinsText.gameObject.SetActive(true);
-            finishText.gameObject.SetActive(true);
+            //coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
+            //coinsText.gameObject.SetActive(true);
+            //finishText.gameObject.SetActive(true);
+            GameManager.Instance.ShowEndingDialog();
         }
     }
 
