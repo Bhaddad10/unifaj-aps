@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class UiMenu : MonoBehaviour
 {
     public GameObject EndingDialog;
+    public GameObject InGameInfoDialog;
 
     private void Start()
     {
-        GameManager.Instance.SetAndHideEndingDialog(EndingDialog);
+        GameManager.Instance.Init(EndingDialog, InGameInfoDialog);
     }
 }
 

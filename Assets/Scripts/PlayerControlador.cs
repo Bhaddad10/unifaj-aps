@@ -37,6 +37,8 @@ public class PlayerControlador: MonoBehaviour
     private IEnumerator getBackUpCoroutine;
     private bool isJumping;
     private bool isDashingDown;
+    private int score = 0;
+    private int multiplier = 1;
 
     private void Start()
     {
@@ -48,6 +50,7 @@ public class PlayerControlador: MonoBehaviour
         posicaoInicial = transform.position;
 
         InvokeRepeating("Walk", .25f, .25f);
+        InvokeRepeating("ScoreCount", .05f, .05f);
     }
 
     private void Update()
@@ -174,7 +177,7 @@ public class PlayerControlador: MonoBehaviour
             //coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
             //coinsText.gameObject.SetActive(true);
             //finishText.gameObject.SetActive(true);
-            GameManager.Instance.ShowEndingDialog();
+            GameManager.Instance.ShowEndingDialog(score, coins);
         }
     }
 
@@ -188,6 +191,7 @@ public class PlayerControlador: MonoBehaviour
     {
         Destroy(other);
         coins++;
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
     }
 
 
@@ -215,5 +219,11 @@ public class PlayerControlador: MonoBehaviour
     {
         if (isGrounded())
             AudioManager.instance.PlayWalk();
+    }
+
+    void ScoreCount()
+    {
+        score += 1;
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
     }
 }
