@@ -284,6 +284,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1945184079}
     m_Modifications:
+    - target: {fileID: 8337556312002619534, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
+      propertyPath: m_Text
+      value: Derrota
+      objectReference: {fileID: 0}
     - target: {fileID: 8337556312297310050, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
       propertyPath: m_Name
       value: FinishedLevelDialog
