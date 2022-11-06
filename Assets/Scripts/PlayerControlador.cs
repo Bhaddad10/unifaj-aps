@@ -35,6 +35,8 @@ public class PlayerControlador: MonoBehaviour
     private Vector3 targetScale;
 
     private IEnumerator getBackUpCoroutine;
+    private bool isJumping;
+    private bool isDashingDown;
 
     private void Start()
     {
@@ -48,10 +50,6 @@ public class PlayerControlador: MonoBehaviour
 
     private void Update()
     {
-        // Movimenta��o Autom�tica para Frente
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
-
-
         // Controles
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -60,7 +58,6 @@ public class PlayerControlador: MonoBehaviour
         // Se setas esquerda/direita, aplique a altera��o de lane
         if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
         if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, lanes[currentLane], 10f * Time.deltaTime), transform.position.y, transform.position.z);
 
         //transform.position = new Vector3(lanes[currentLane], transform.position.y, transform.position.z);
 
@@ -75,19 +72,13 @@ public class PlayerControlador: MonoBehaviour
                 StopCoroutine(getBackUpCoroutine);
                 GetBackUp();
             }
-            jump();
-        }
-
-        // Cair mais r�pido
-        if (_rigidbody.velocity.y < 0)
-        {
-            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            isJumping = true;
         }
 
         // Se est� pressionando seta baixo, e n�o est� no ch�o
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
-            _rigidbody.AddForce(new Vector3(0, -dashDownAcceleration, 0), ForceMode.VelocityChange);
+            isDashingDown = true;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
@@ -115,11 +106,6 @@ public class PlayerControlador: MonoBehaviour
             currentLane = Math.Min(currentLane + diff, 2);
     }
 
-    // M�todo que realiza o pulo do player
-    void jump()
-    {
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
-    }
 
     // M�todo retorna se player est� no ch�o
     bool isGrounded()
@@ -127,14 +113,34 @@ public class PlayerControlador: MonoBehaviour
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
     }
 
-    /*private void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (!isGrounded() && _rigidbody.velocity.y <= 0)
-        {
-            _rigidbody.AddForce(new Vector3(0, -.3f, 0), ForceMode.VelocityChange);
-        }
-    }*/
+        // Movimenta��o Autom�tica para Frente
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
 
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, lanes[currentLane], .2f), transform.position.y, transform.position.z);
+
+
+
+        if (isJumping)
+        {
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
+            isJumping = false;
+        }
+
+        if (isDashingDown)
+        {
+            _rigidbody.AddForce(new Vector3(0, -dashDownAcceleration, 0), ForceMode.VelocityChange);
+            isDashingDown = false;
+        }
+
+        // Cair mais r�pido
+        if (_rigidbody.velocity.y < 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+
+    }
 
 
     private void OnCollisionEnter(Collision collision)
