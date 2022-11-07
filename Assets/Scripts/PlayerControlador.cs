@@ -208,12 +208,14 @@ public class PlayerControlador: MonoBehaviour
         Destroy(other);
         coins++;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        AudioManager.instance.Play("getCoin");
     }
 
     private void GetPowerUp(GameObject other)
     {
         other.GetComponent<SneakersPowerUp>().ActivatePowerUp();
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        AudioManager.instance.Play("getPowerUp");
     }
 
 
