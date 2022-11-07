@@ -12,6 +12,10 @@ public class GameManager : IPersistentSingleton<GameManager>
     GameObject InGameInfoDialog;
     public PlayerControlador player;
 
+    private void Start()
+    {
+        AudioManager.instance.Play("AmbientHallway");
+    }
     public void Init(GameObject newEndingDialog, GameObject newInGameInfoDialog)
     {
         SetAndHideEndingDialog(newEndingDialog);
