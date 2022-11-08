@@ -15,6 +15,7 @@ public class GameManager : IPersistentSingleton<GameManager>
     private void Start()
     {
         AudioManager.instance.Play("AmbientHallway");
+        AudioManager.instance.Play("GameTheme");
     }
     public void Init(GameObject newEndingDialog, GameObject newInGameInfoDialog)
     {
