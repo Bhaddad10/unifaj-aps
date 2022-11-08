@@ -14,7 +14,7 @@ public class ObstacleGenenerator : MonoBehaviour
 
     float[] lanes = { -6.5f, 0f, 6.5f };
 
-    public List<GameObject> obstacles;
+    public List<Obstacle> obstacles;
     public GameObject jumpCoins;
     public GameObject coins;
 
@@ -59,13 +59,46 @@ public class ObstacleGenenerator : MonoBehaviour
     {
         Vector3 p = new Vector3(lanes[lane], 0, zObstacle);
 
-        
 
-        GameObject obstacleToSpawn = obstacles[Random.Range(0, obstacles.Count)];
+        Obstacle obstacleProperties = obstacles[Random.Range(0, obstacles.Count)];
+        GameObject obstacleToSpawn = obstacleProperties.obstacle;
         GameObject obstacle = Instantiate(obstacleToSpawn);
-
-        //GenerateCoins(obstacle);
-
         obstacle.transform.position = p;
+
+        if (obstacleProperties.allowCoins && obstacleProperties.allowJumpCoins)
+        {
+            int result = Random.Range(0, 3);
+            switch (result)
+            {
+                case 0:
+                    InstObjectAtPos(coins, p);
+                    break;
+                case 1:
+                    InstObjectAtPos(jumpCoins, p);
+                    break;
+            }
+        } else if (obstacleProperties.allowCoins) {
+            if (Random.value < 0.5f)
+                InstObjectAtPos(coins, p);
+        } else if (obstacleProperties.allowJumpCoins) {
+            if (Random.value < 0.5f)
+                InstObjectAtPos(jumpCoins, p);
+        }
+
+
+    }
+
+    private void InstObjectAtPos(GameObject prefab, Vector3 pos)
+    {
+        GameObject obstacle = Instantiate(prefab);
+        obstacle.transform.position = pos;
+    }
+
+    [Serializable]
+    public class Obstacle
+    {
+        public GameObject obstacle;
+        public bool allowCoins;
+        public bool allowJumpCoins;
     }
 }
