@@ -19,12 +19,14 @@ public class UiMenu : MonoBehaviour
     {
         Time.timeScale = 0f;
         PauseDialog.SetActive(true);
+        AudioManager.instance.Play("uiClick");
     }
 
     public void Resume()
     {
         Time.timeScale = 1f;
         PauseDialog.SetActive(false);
+        AudioManager.instance.Play("uiClick");
     }
 }
 

@@ -14,16 +14,19 @@ public class FinishedLevelDialogConfig : MonoBehaviour
 
     public void OnNextLevelButtonClicked()
     {
+        AudioManager.instance.Play("uiClick");
         SceneManager.LoadScene(NextLevelScene);
     }
 
     public void OnRestartButtonClicked()
     {
+        AudioManager.instance.Play("uiClick");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnHomeButtonClicked()
     {
+        AudioManager.instance.Play("uiClick");
         SceneManager.LoadScene(HomeScene);
     }
 

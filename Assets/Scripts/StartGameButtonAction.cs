@@ -9,7 +9,8 @@ public class StartGameButtonAction : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("ué");
         SceneManager.LoadScene(gameScene);
+        AudioManager.instance.Play("uiClick");
+        Time.timeScale = 1f;
     }
 }
