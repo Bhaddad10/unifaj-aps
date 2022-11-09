@@ -715,7 +715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0000074953, y: -9.2}
+  m_AnchoredPosition: {x: -0.0000074953, y: -9.200012}
   m_SizeDelta: {x: 36.2642, y: 50.9491}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &820918332
@@ -1834,7 +1834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0, y: -9.199997}
+  m_AnchoredPosition: {x: 0, y: -9.200012}
   m_SizeDelta: {x: 36.2642, y: 50.9491}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1377006868
@@ -3017,6 +3017,10 @@ PrefabInstance:
     - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: finishText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: increaseSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7229828262933758219, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: coinsText

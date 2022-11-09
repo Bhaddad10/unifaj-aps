@@ -42,6 +42,9 @@ public class PlayerControlador: MonoBehaviour
     
     public bool isSneakersPowerUpOn;
 
+    [Range(1f, 100f)]
+    public float increaseSpeed;
+
     private void Start()
     {
         normalScale = transform.localScale;
@@ -249,6 +252,7 @@ public class PlayerControlador: MonoBehaviour
     {
         score += 1;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        speed += increaseSpeed/100;
     }
 
     IEnumerator DoPlayDie()
