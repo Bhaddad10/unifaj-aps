@@ -370,13 +370,17 @@ PrefabInstance:
       propertyPath: m_Text
       value: Derrota
       objectReference: {fileID: 0}
+    - target: {fileID: 8337556312290418259, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8337556312297310050, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
       propertyPath: m_Name
       value: FinishedLevelDialog
       objectReference: {fileID: 0}
     - target: {fileID: 8337556312297310050, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8337556312297310051, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
       propertyPath: m_Pivot.x
@@ -474,6 +478,10 @@ PrefabInstance:
       propertyPath: ScoreValueTxt
       value: 
       objectReference: {fileID: 1861807768}
+    - target: {fileID: 8337556313034295928, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -42
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eccba18fc24f4f85a6f4453cb40d4, type: 3}
 --- !u!224 &541415621 stripped
