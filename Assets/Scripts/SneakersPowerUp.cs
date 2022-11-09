@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class SneakersPowerUp : MonoBehaviour
 {
+    private static float normalJump;
+    private static IEnumerator deactivateCoroutine;
+
     [Range(1f, 8f)]
     public float duration = 2f;
     public float jumpBoost;
-
-    private float normalJump;
 
     public GameObject Visual;
 
     private void Start()
     {
-        normalJump = GameManager.Instance.player.jumpForce;
+        if (normalJump == 0f)
+            normalJump = GameManager.Instance.player.jumpForce;
     }
 
     public void ActivatePowerUp()
     {
         if (GameManager.Instance.player.isSneakersPowerUpOn)
-            return;
+            StopCoroutine(deactivateCoroutine);
         GameManager.Instance.player.isSneakersPowerUpOn = true;
         Debug.Log("ActivatePowerUp");
         GameManager.Instance.player.jumpForce = normalJump * jumpBoost;
 
-        StartCoroutine(DeactivatePowerUp(duration));
+        deactivateCoroutine = DeactivatePowerUp(duration);
+        StartCoroutine(deactivateCoroutine);
 
         Visual.SetActive(false);
     }
