@@ -196,10 +196,13 @@ public class PlayerControlador: MonoBehaviour
     private void ResetLevel()
     {
         //transform.position = posicaoInicial;
-        GameManager.Instance.ShowEndingDialog(score, coins);
-        AudioManager.instance.Play("dieSound");
+        AudioManager.instance.StopAll();
         StartCoroutine(DoPlayDie());
         speed = 0;
+        Destroy(GetComponent<CapsuleCollider>());
+        Destroy(GetComponent<BoxCollider>());
+        _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
         // stop walk sound
         CancelInvoke("Walk");
         CancelInvoke("ScoreCount");
@@ -257,11 +260,13 @@ public class PlayerControlador: MonoBehaviour
 
     IEnumerator DoPlayDie()
     {
+        AudioManager.instance.Play("dieSound");
         //Wait for the specified delay time before continuing.
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         AudioManager.instance.Play("die");
 
         yield return new WaitForSeconds(2f);
         AudioManager.instance.Play("loose");
+        GameManager.Instance.ShowEndingDialog(score, coins);
     }
 }

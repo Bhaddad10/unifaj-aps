@@ -79,4 +79,12 @@ public class AudioManager : MonoBehaviour
     {
         Play("FootstepMetal0" + Random.Range(1, 9));
     }
+
+    internal void StopAll()
+    {
+        foreach (Sound sound in sounds)
+        {
+            sound.source.Stop();
+        }
+    }
 }
