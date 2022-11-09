@@ -33,7 +33,7 @@ public class ObstacleGenenerator : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Vector3 generateFrom = gameObject.transform.position;
-            gameObject.transform.position += Vector3.forward * (distance - objectArea);
+            gameObject.transform.position += Vector3.forward * (distance + objectArea);
             GenerateObstacles(generateFrom);
         }
     }
