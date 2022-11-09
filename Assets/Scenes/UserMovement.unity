@@ -690,15 +690,23 @@ MonoBehaviour:
   - obstacle: {fileID: 3516835393934389836, guid: 989879cad65b649408489ac29eb0e090, type: 3}
     allowCoins: 0
     allowJumpCoins: 1
+    hasProbability: 0
+    probability: 0
   - obstacle: {fileID: 5498548190753038061, guid: 627fe41ae98d1684ba9cb4bc82c03e3c, type: 3}
     allowCoins: 1
     allowJumpCoins: 0
+    hasProbability: 0
+    probability: 0
   - obstacle: {fileID: 5498548190753038061, guid: 8d1bc2297ac4d4f498d96e400f3e104a, type: 3}
     allowCoins: 1
     allowJumpCoins: 1
+    hasProbability: 0
+    probability: 0
   - obstacle: {fileID: 3004447432090704329, guid: e415093ade975b443b0687d58f061586, type: 3}
     allowCoins: 0
     allowJumpCoins: 0
+    hasProbability: 1
+    probability: 10
   jumpCoins: {fileID: 851055734541726329, guid: 716d3b53f54a1c84d839929f68412cd3, type: 3}
   coins: {fileID: 9133934130470111251, guid: a3d253e303b64c84fbaef4960810762a, type: 3}
 --- !u!1 &820918328

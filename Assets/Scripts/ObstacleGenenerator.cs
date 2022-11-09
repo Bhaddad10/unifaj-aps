@@ -65,6 +65,14 @@ public class ObstacleGenenerator : MonoBehaviour
         GameObject obstacle = Instantiate(obstacleToSpawn);
         obstacle.transform.position = p;
 
+        if (obstacleProperties.hasProbability)
+        {
+            if (Random.value < obstacleProperties.probability)
+            {
+                InstObjectAtPos(obstacle, p);
+            }
+        }
+
         if (obstacleProperties.allowCoins && obstacleProperties.allowJumpCoins)
         {
             int result = Random.Range(0, 3);
@@ -78,10 +86,10 @@ public class ObstacleGenenerator : MonoBehaviour
                     break;
             }
         } else if (obstacleProperties.allowCoins) {
-            if (Random.value < 0.5f)
+            if (Random.value <= 0.5f)
                 InstObjectAtPos(coins, p);
         } else if (obstacleProperties.allowJumpCoins) {
-            if (Random.value < 0.5f)
+            if (Random.value <= 0.5f)
                 InstObjectAtPos(jumpCoins, p);
         }
 
@@ -100,5 +108,9 @@ public class ObstacleGenenerator : MonoBehaviour
         public GameObject obstacle;
         public bool allowCoins;
         public bool allowJumpCoins;
+
+        public bool hasProbability;
+        [Range(0, 100)]
+        public int probability;
     }
 }
