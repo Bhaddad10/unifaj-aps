@@ -203,6 +203,7 @@ public class PlayerControlador: MonoBehaviour
         Destroy(GetComponent<BoxCollider>());
         _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
+        _rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         // stop walk sound
         CancelInvoke("Walk");
         CancelInvoke("ScoreCount");
