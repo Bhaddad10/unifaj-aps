@@ -220,6 +220,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 1450216734}
+--- !u!1 &436696803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6228476003320277321, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+  m_PrefabInstance: {fileID: 1475131942065033462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &497005615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2291,10 +2296,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1475131943446044136, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 1475131943446044137, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2339,26 +2340,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: coinsText
-      value: 
+    - target: {fileID: 2112114303915436168, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: finishText
+      propertyPath: playerBody
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 436696803}
     - target: {fileID: 2177052169303587562, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: increaseSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7229828262933758219, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: coinsText
+      propertyPath: playerDeadBody
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7229828262933758219, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
-      propertyPath: finishText
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2112114303915436168}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
 --- !u!224 &1971686542077433954
@@ -2380,6 +2373,11 @@ RectTransform:
   m_AnchoredPosition: {x: -93.25641, y: -25.177948}
   m_SizeDelta: {x: 69.9756, y: 34.6163}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2112114303915436168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2112114303915436168, guid: 90def463dc5247249bb2d98ee8d63aa1, type: 3}
+  m_PrefabInstance: {fileID: 1475131942065033462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2121024889705819850
 RectTransform:
   m_ObjectHideFlags: 0

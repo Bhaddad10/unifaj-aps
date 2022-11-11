@@ -22,6 +22,9 @@ public class PlayerControlador: MonoBehaviour
     public Text finishText; // elemento de texto de vit�ria
     public Text coinsText; // elemento de texto de moedas coletadas
 
+    public GameObject playerBody;
+    public GameObject playerDeadBody;
+
 
     private int currentLane = 1;
     float[] lanes = { -6.5f, 0f, 6.5f };
@@ -208,6 +211,7 @@ public class PlayerControlador: MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         isDead = true;
+        GetComponentInChildren<Animator>().enabled = false;
 
         // stop walk sound
         CancelInvoke("Walk");
@@ -270,9 +274,12 @@ public class PlayerControlador: MonoBehaviour
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(2f);
         AudioManager.instance.Play("die");
+        playerBody.SetActive(false);
+        playerDeadBody.SetActive(true);
 
         yield return new WaitForSeconds(2f);
         AudioManager.instance.Play("loose");
         GameManager.Instance.ShowEndingDialog(score, coins);
+
     }
 }
