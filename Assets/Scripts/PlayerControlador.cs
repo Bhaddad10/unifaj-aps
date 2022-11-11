@@ -44,6 +44,7 @@ public class PlayerControlador: MonoBehaviour
 
     [Range(1f, 100f)]
     public float increaseSpeed;
+    private bool isDead;
 
     private void Start()
     {
@@ -59,6 +60,8 @@ public class PlayerControlador: MonoBehaviour
     }
     private void Update()
     {
+        if (isDead)
+            return;
         // Controles
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -204,6 +207,8 @@ public class PlayerControlador: MonoBehaviour
         _rigidbody.useGravity = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        isDead = true;
+
         // stop walk sound
         CancelInvoke("Walk");
         CancelInvoke("ScoreCount");
