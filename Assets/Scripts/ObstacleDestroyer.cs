@@ -6,9 +6,15 @@ public class ObstacleDestroyer : MonoBehaviour
 {
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Obstacle") || collision.CompareTag("Coin") || collision.CompareTag("PowerUp"))
+        if (collision.CompareTag("PowerUp")) {
+            if (!collision.gameObject.GetComponent<SneakersPowerUp>().isActive)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
+
+        if (collision.CompareTag("Obstacle") || collision.CompareTag("Coin"))
         {
-            Debug.Log("Collided with obs or coin");
             Destroy(collision.transform.root.gameObject);
         }
     }
