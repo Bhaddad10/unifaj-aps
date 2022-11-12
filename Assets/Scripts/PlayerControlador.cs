@@ -265,6 +265,7 @@ public class PlayerControlador: MonoBehaviour
     {
         score += 1;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        GameManager.Instance.UpdateInGamePowerUpInfoDialog();
         speed += increaseSpeed/100;
     }
 

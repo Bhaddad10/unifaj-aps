@@ -6,6 +6,8 @@ public class SneakersPowerUp : MonoBehaviour
 {
     private static float normalJump;
     private static IEnumerator deactivateCoroutine;
+    public static float lastPowerUp;
+    public static float sDuration;
 
     [Range(1f, 8f)]
     public float duration = 2f;
@@ -15,12 +17,14 @@ public class SneakersPowerUp : MonoBehaviour
 
     private void Start()
     {
+        sDuration = duration;
         if (normalJump == 0f)
             normalJump = GameManager.Instance.player.jumpForce;
     }
 
     public void ActivatePowerUp()
     {
+        lastPowerUp = Time.time;
         if (GameManager.Instance.player.isSneakersPowerUpOn)
             StopCoroutine(deactivateCoroutine);
         GameManager.Instance.player.isSneakersPowerUpOn = true;

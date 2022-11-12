@@ -52,4 +52,10 @@ public class GameManager : IPersistentSingleton<GameManager>
     {
         InGameInfoDialog.GetComponent<InGameInfoDialogConfig>().SetInfo(score, coins, multiplier);
     }
+
+    internal void UpdateInGamePowerUpInfoDialog()
+    {
+        float percentage = (Time.time - SneakersPowerUp.lastPowerUp) / SneakersPowerUp.sDuration;
+        InGameInfoDialog.GetComponent<InGameInfoDialogConfig>().SetPowerUpInfo(player.isSneakersPowerUpOn, percentage);
+    }
 }
