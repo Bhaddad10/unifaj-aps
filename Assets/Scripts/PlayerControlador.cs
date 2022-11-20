@@ -6,66 +6,162 @@ using UnityEngine.UI;
 
 public class PlayerControlador: MonoBehaviour
 {
-    Rigidbody rigidbody;
+    Rigidbody _rigidbody;
 
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask ground;
 
     public float speed = 10f; // velocidade do player
-    public float jumpForce = 5f; // força do pulo
-    Vector3 posicaoInicial; // posição inicial do player
     
-    public int coins = 0; // variável pública para poder inspecionar no unity
-    public Text finishText; // elemento de texto de vitória
+    public float jumpForce = 5f; // forï¿½a do pulo
+    public float fallMultiplier = 2.5f;
+
+    Vector3 posicaoInicial; // posiï¿½ï¿½o inicial do player
+    
+    public int coins = 0; // variï¿½vel pï¿½blica para poder inspecionar no unity
+    public Text finishText; // elemento de texto de vitï¿½ria
     public Text coinsText; // elemento de texto de moedas coletadas
+
+    public GameObject playerBody;
+    public GameObject playerDeadBody;
+
+
+    private int currentLane = 1;
+    float[] lanes = { -6.5f, 0f, 6.5f };
+    
+    private bool isDucking = false;
+    [Range(0.1f, 5f)]
+    public float duckingTime = 1.5f;
+    public float dashDownAcceleration;
+
+    private Vector3 normalScale;
+    private Vector3 targetScale;
+
+    private IEnumerator getBackUpCoroutine;
+    private bool isJumping;
+    private bool isDashingDown;
+    private int score = 0;
+    private int multiplier = 1;
+    
+    public bool isSneakersPowerUpOn;
+
+    [Range(1f, 100f)]
+    public float increaseSpeed;
+    private bool isDead;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        // armazena posição inicial para possível reset
-        posicaoInicial = transform.position;
-    }
+        normalScale = transform.localScale;
+        targetScale = normalScale;
 
+        _rigidbody = GetComponent<Rigidbody>();
+        // armazena posiï¿½ï¿½o inicial para possï¿½vel reset
+        posicaoInicial = transform.position;
+
+        InvokeRepeating("Walk", .25f, .25f);
+        InvokeRepeating("ScoreCount", .05f, .05f);
+    }
     private void Update()
     {
-        // Movimentação do Player
+        if (isDead)
+            return;
+        // Controles
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        rigidbody.velocity = new Vector3(horizontal * speed, rigidbody.velocity.y, vertical * speed);
+        // Movimentaï¿½ï¿½o entre as faixas
+        // Se setas esquerda/direita, aplique a alteraï¿½ï¿½o de lane
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
+        if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
+
+        //transform.position = new Vector3(lanes[currentLane], transform.position.y, transform.position.z);
+
 
         // Pulo do player
-        // Se está pressionando botão de pulo, e não está no chão
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        // Se estï¿½ pressionando botï¿½o de pulo (ou setas para cima), e estï¿½ no chï¿½o
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded())
         {
-            jump();
+            if (isDucking)
+            {
+                Debug.Log("Jumping when ducking");
+                StopCoroutine(getBackUpCoroutine);
+                GetBackUp();
+            }
+            isJumping = true;
+        }
+
+        // Se estï¿½ pressionando seta baixo, e nï¿½o estï¿½ no chï¿½o
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
+        {
+            isDashingDown = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
+        {
+            isDucking = true;
+            targetScale = normalScale * .5f;
+            DoGetBackUp(duckingTime);
+        }
+
+        if (transform.localScale.y != targetScale.y)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, targetScale.y, 10f * Time.deltaTime), transform.localScale.z);
         }
     }
 
-    // Método que realiza o pulo do player
-    void jump()
+    // Mï¿½todo para evitar que a currentLane ultrapasse os limites (0 e 2)
+    private void ChangeLane(int diff)
     {
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, jumpForce, rigidbody.velocity.z);
+        // Indo para lane da esquerda
+        if (diff < 0)
+            currentLane = Math.Max(currentLane + diff, 0);
+
+        // Indo para lane da direita
+        if (diff > 0)
+            currentLane = Math.Min(currentLane + diff, 2);
     }
 
-    // Método retorna se player está no chão
+
+    // Mï¿½todo retorna se player estï¿½ no chï¿½o
     bool isGrounded()
     {
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    private void FixedUpdate()
     {
-        // Ao colidir com um objeto
-        GameObject other = collision.gameObject;
-;
+        // Movimentaï¿½ï¿½o Automï¿½tica para Frente
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
 
-        // Se for um espinho, reseta o jogador para posição inicial
-        if (other.CompareTag("Spike"))
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, lanes[currentLane], .2f), transform.position.y, transform.position.z);
+
+
+
+        if (isJumping)
         {
-            ResetLevel();
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
+            isJumping = false;
         }
+
+        if (isDashingDown)
+        {
+            _rigidbody.AddForce(new Vector3(0, -dashDownAcceleration, 0), ForceMode.VelocityChange);
+            isDashingDown = false;
+        }
+
+        // Cair mais rï¿½pido
+        if (_rigidbody.velocity.y < 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+
+    }
+
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        // Ao collidir trigger com um objeto
+        GameObject other = collision.gameObject;
 
         // Se for uma moeda, coleta-a
         if (other.CompareTag("Coin"))
@@ -73,24 +169,118 @@ public class PlayerControlador: MonoBehaviour
             GetCoin(other);
         }
 
-        // Se for a linha de chegada, exibe texto de finalização da fase
+        if (other.CompareTag("PowerUp"))
+        {
+            GetPowerUp(other);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Ao colidir com um objeto
+        GameObject other = collision.gameObject;
+
+        // Se for um espinho, reseta o jogador para posiï¿½ï¿½o inicial
+        if (other.CompareTag("Spike") || other.CompareTag("Obstacle"))
+        {
+            ResetLevel();
+        }
+
+        // Se for a linha de chegada, exibe texto de finalizaï¿½ï¿½o da fase
         if (other.CompareTag("Finish"))
         {
-            coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
-            coinsText.gameObject.SetActive(true);
-            finishText.gameObject.SetActive(true);
+            //coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
+            //coinsText.gameObject.SetActive(true);
+            //finishText.gameObject.SetActive(true);
+            GameManager.Instance.ShowEndingDialog(score, coins);
+            //AudioManager.instance.Play("dieSound");
+            //StartCoroutine(DoPlayDie());
+            //speed = 0;
         }
     }
 
     private void ResetLevel()
     {
-        transform.position = posicaoInicial;
+        //transform.position = posicaoInicial;
+        AudioManager.instance.StopAll();
+        StartCoroutine(DoPlayDie());
+        speed = 0;
+        Destroy(GetComponent<CapsuleCollider>());
+        Destroy(GetComponent<BoxCollider>());
+        _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        isDead = true;
+        GetComponentInChildren<Animator>().enabled = false;
+
+        // stop walk sound
+        CancelInvoke("Walk");
+        CancelInvoke("ScoreCount");
     }
 
-    // destrói a moeda e adiciona ao contador de moedas do player
+    // destrï¿½i a moeda e adiciona ao contador de moedas do player
     private void GetCoin(GameObject other)
     {
         Destroy(other);
         coins++;
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        AudioManager.instance.Play("getCoin");
+    }
+
+    private void GetPowerUp(GameObject other)
+    {
+        other.GetComponent<SneakersPowerUp>().ActivatePowerUp();
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        AudioManager.instance.Play("getPowerUp");
+    }
+
+
+    void DoGetBackUp(float delayTime)
+    {
+        getBackUpCoroutine = GetBackUpEnumerator(delayTime);
+        StartCoroutine(getBackUpCoroutine);
+    }
+
+    IEnumerator GetBackUpEnumerator(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+        GetBackUp();
+    }
+
+    void GetBackUp()
+    {
+        //Do the action after the delay time has finished.
+        targetScale = normalScale;
+        isDucking = false;
+    }
+
+    void Walk()
+    {
+        if (isGrounded())
+            AudioManager.instance.PlayWalk();
+    }
+
+    void ScoreCount()
+    {
+        score += 1;
+        GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
+        GameManager.Instance.UpdateInGamePowerUpInfoDialog();
+        speed += increaseSpeed/100;
+    }
+
+    IEnumerator DoPlayDie()
+    {
+        AudioManager.instance.Play("dieSound");
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(2f);
+        AudioManager.instance.Play("die");
+        playerBody.SetActive(false);
+        playerDeadBody.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        AudioManager.instance.Play("loose");
+        GameManager.Instance.ShowEndingDialog(score, coins);
+
     }
 }
