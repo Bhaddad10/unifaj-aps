@@ -202,7 +202,7 @@ public class PlayerControlador: MonoBehaviour
     private void ResetLevel()
     {
         //transform.position = posicaoInicial;
-        AudioManager.instance.StopAll();
+        AudioManager.Instance.StopAll();
         StartCoroutine(DoPlayDie());
         speed = 0;
         Destroy(GetComponent<CapsuleCollider>());
@@ -224,14 +224,14 @@ public class PlayerControlador: MonoBehaviour
         Destroy(other);
         coins++;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
-        AudioManager.instance.Play("getCoin");
+        AudioManager.Instance.Play("getCoin");
     }
 
     private void GetPowerUp(GameObject other)
     {
         other.GetComponent<SneakersPowerUp>().ActivatePowerUp();
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
-        AudioManager.instance.Play("getPowerUp");
+        AudioManager.Instance.Play("getPowerUp");
     }
 
 
@@ -258,7 +258,7 @@ public class PlayerControlador: MonoBehaviour
     void Walk()
     {
         if (isGrounded())
-            AudioManager.instance.PlayWalk();
+            AudioManager.Instance.PlayWalk();
     }
 
     void ScoreCount()
@@ -271,15 +271,15 @@ public class PlayerControlador: MonoBehaviour
 
     IEnumerator DoPlayDie()
     {
-        AudioManager.instance.Play("dieSound");
+        AudioManager.Instance.Play("dieSound");
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(2f);
-        AudioManager.instance.Play("die");
+        AudioManager.Instance.Play("die");
         playerBody.SetActive(false);
         playerDeadBody.SetActive(true);
 
         yield return new WaitForSeconds(2f);
-        AudioManager.instance.Play("loose");
+        AudioManager.Instance.Play("loose");
         GameManager.Instance.ShowEndingDialog(score, coins);
 
     }

@@ -14,22 +14,22 @@ public class FinishedLevelDialogConfig : MonoBehaviour
 
     public void OnNextLevelButtonClicked()
     {
-        AudioManager.instance.StopAll();
-        AudioManager.instance.Play("uiClick");
+        AudioManager.Instance.StopAll();
+        AudioManager.Instance.Play("uiClick");
         SceneManager.LoadScene(NextLevelScene);
     }
 
     public void OnRestartButtonClicked()
     {
-        AudioManager.instance.StopAll();
-        AudioManager.instance.Play("uiClick");
+        AudioManager.Instance.StopAll();
+        AudioManager.Instance.Play("uiClick");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnHomeButtonClicked()
     {
-        AudioManager.instance.StopAll();
-        AudioManager.instance.Play("uiClick");
+        AudioManager.Instance.StopAll();
+        AudioManager.Instance.Play("uiClick");
         SceneManager.LoadScene(HomeScene);
     }
 

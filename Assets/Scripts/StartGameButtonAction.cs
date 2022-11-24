@@ -9,20 +9,20 @@ public class StartGameButtonAction : MonoBehaviour
 
     private void Awake()
     {
-        if (AudioManager.instance)
-            AudioManager.instance.Stop("GameTheme");
+        if (AudioManager.Instance)
+            AudioManager.Instance.Stop("GameTheme");
     }
 
     private void Start()
     {
-        AudioManager.instance.Play("HomeTheme");
+        AudioManager.Instance.Play("HomeTheme");
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene(gameScene);
-        AudioManager.instance.Play("uiClick");
-        AudioManager.instance.Stop("HomeTheme");
+        AudioManager.Instance.Play("uiClick");
+        AudioManager.Instance.Stop("HomeTheme");
         Time.timeScale = 1f;
     }
 }
