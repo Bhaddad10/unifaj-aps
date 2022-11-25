@@ -13,7 +13,7 @@ public class GameManager : IPersistentSingleton<GameManager>
     GameObject InGameInfoDialog;
     
     // PlayerController reference, so scripts can get its stats
-    public PlayerControlador player;
+    public PlayerController player;
 
     private void Start()
     {
