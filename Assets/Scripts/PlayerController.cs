@@ -6,47 +6,52 @@ using UnityEngine.UI;
 
 public class PlayerController: MonoBehaviour
 {
-    Rigidbody _rigidbody;
+    // Player parameters
+    [Range(1f, 25f)]
+    public float speed = 10f; // player's speed
+    [Range(1f, 25f)]
+    public float jumpForce = 5f;
+    [Range(1f, 25f)]
+    public float dashDownAcceleration; // dashDown force
+    [Range(1f, 3f)]
+    public float fallMultiplier = 2.5f; // fall faster
+    [Range(0.1f, 5f)]
+    public float duckingTime = 1.5f; // ducking duration
+    // Speed increases over time
+    [Range(1f, 100f)]
+    public float increaseSpeed;
 
+    // logic
+    Rigidbody _rigidbody;
+    // attributes for checking if player is onGround
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask ground;
 
-    public float speed = 10f; // velocidade do player
-    
-    public float jumpForce = 5f; // for�a do pulo
-    public float fallMultiplier = 2.5f;
+    // player stats
+    private int coins = 0;
+    private int score = 0;
+    private int multiplier = 1;
+    [HideInInspector]
+    public bool isSneakersPowerUpOn;
 
-    Vector3 posicaoInicial; // posi��o inicial do player
-    
-    public int coins = 0; // vari�vel p�blica para poder inspecionar no unity
-    public Text finishText; // elemento de texto de vit�ria
-    public Text coinsText; // elemento de texto de moedas coletadas
-
+    // Handles player death 'animation'
     public GameObject playerBody;
     public GameObject playerDeadBody;
 
-
-    private int currentLane = 1;
-    float[] lanes = { -6.5f, 0f, 6.5f };
-    
-    private bool isDucking = false;
-    [Range(0.1f, 5f)]
-    public float duckingTime = 1.5f;
-    public float dashDownAcceleration;
-
+    // Duck compress
     private Vector3 normalScale;
     private Vector3 targetScale;
-
+    // Scheduled de-compress
     private IEnumerator getBackUpCoroutine;
+
+    // Lane-switching
+    float[] lanes = { -6.5f, 0f, 6.5f };
+    private int currentLane = 1;
+
+    // Control State
+    private bool isDucking = false;
     private bool isJumping;
     private bool isDashingDown;
-    private int score = 0;
-    private int multiplier = 1;
-    
-    public bool isSneakersPowerUpOn;
-
-    [Range(1f, 100f)]
-    public float increaseSpeed;
     private bool isDead;
 
     private void Start()
@@ -55,8 +60,6 @@ public class PlayerController: MonoBehaviour
         targetScale = normalScale;
 
         _rigidbody = GetComponent<Rigidbody>();
-        // armazena posi��o inicial para poss�vel reset
-        posicaoInicial = transform.position;
 
         InvokeRepeating("Walk", .25f, .25f);
         InvokeRepeating("ScoreCount", .05f, .05f);
@@ -189,9 +192,6 @@ public class PlayerController: MonoBehaviour
         // Se for a linha de chegada, exibe texto de finaliza��o da fase
         if (other.CompareTag("Finish"))
         {
-            //coinsText.text = coinsText.text.Replace("{coins}", coins.ToString());
-            //coinsText.gameObject.SetActive(true);
-            //finishText.gameObject.SetActive(true);
             GameManager.Instance.ShowEndingDialog(score, coins);
             //AudioManager.instance.Play("dieSound");
             //StartCoroutine(DoPlayDie());
@@ -201,7 +201,6 @@ public class PlayerController: MonoBehaviour
 
     private void ResetLevel()
     {
-        //transform.position = posicaoInicial;
         AudioManager.Instance.StopAll();
         StartCoroutine(DoPlayDie());
         speed = 0;
