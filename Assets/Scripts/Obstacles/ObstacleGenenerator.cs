@@ -56,18 +56,25 @@ public class ObstacleGenenerator : MonoBehaviour
     {
         Vector3 p = new Vector3(lanes[lane], 0, zObstacle);
 
-        // Instantiate a random obstacle from the list
-        Obstacle obstacleProperties = obstacles[Random.Range(0, obstacles.Count)];
-        GameObject obstacleToSpawn = obstacleProperties.obstacle;
-        GameObject obstacle = Instantiate(obstacleToSpawn);
-        obstacle.transform.position = p;
-
-        // if obstacle is probability dependent
-        if (obstacleProperties.hasProbability)
+        Obstacle obstacleProperties;
+        while (true)
         {
-            if (Random.value < obstacleProperties.probability)
+            // Instantiate a random obstacle from the list
+            obstacleProperties = obstacles[Random.Range(0, obstacles.Count)];
+            GameObject obstacleToSpawn = obstacleProperties.obstacle;
+
+            // if obstacle is not probability dependent, just DO IT
+            if (!obstacleProperties.hasProbability)
             {
-                InsantiatetObjectAtPos(obstacle, p);
+                InsantiatetObjectAtPos(obstacleToSpawn, p);
+                break;
+            }
+
+            // is probability dependent
+            if (Random.value < (obstacleProperties.probability / 100f))
+            {
+                InsantiatetObjectAtPos(obstacleToSpawn, p);
+                break;
             }
         }
 

@@ -771,7 +771,7 @@ MonoBehaviour:
     allowCoins: 0
     allowJumpCoins: 0
     hasProbability: 1
-    probability: 10
+    probability: 20
   jumpCoins: {fileID: 851055734541726329, guid: 716d3b53f54a1c84d839929f68412cd3, type: 3}
   coins: {fileID: 9133934130470111251, guid: a3d253e303b64c84fbaef4960810762a, type: 3}
 --- !u!1 &686441106
