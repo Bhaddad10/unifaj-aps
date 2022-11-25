@@ -1141,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3404048320750237256, guid: c35c190cf9ee854468374aceeb1104de, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3404048320750237270, guid: c35c190cf9ee854468374aceeb1104de, type: 3}
       propertyPath: sounds.Array.size
@@ -2690,6 +2690,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1450216736}
+    - target: {fileID: 4567138867624381, guid: 310df8ebe9d05bd4fac32c8a6e35f9c4, type: 3}
+      propertyPath: isGameThemeEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3267441378999124431, guid: 310df8ebe9d05bd4fac32c8a6e35f9c4, type: 3}
       propertyPath: m_Name
       value: GameManager
