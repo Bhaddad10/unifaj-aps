@@ -12,13 +12,7 @@ public class FinishedLevelDialogConfig : MonoBehaviour
     public string NextLevelScene;
     public string HomeScene;
 
-    public void OnNextLevelButtonClicked()
-    {
-        AudioManager.Instance.StopAll();
-        AudioManager.Instance.Play("uiClick");
-        SceneManager.LoadScene(NextLevelScene);
-    }
-
+    // When clicking RestartButton, play UI sound and restart level
     public void OnRestartButtonClicked()
     {
         AudioManager.Instance.StopAll();
@@ -26,6 +20,7 @@ public class FinishedLevelDialogConfig : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    // When clicking HomeButton, play UI sound and load home
     public void OnHomeButtonClicked()
     {
         AudioManager.Instance.StopAll();
@@ -33,6 +28,7 @@ public class FinishedLevelDialogConfig : MonoBehaviour
         SceneManager.LoadScene(HomeScene);
     }
 
+    // Set score and coins value
     internal void SetInfo(int score, int coins)
     {
         ScoreValueTxt.text = score.ToString();
