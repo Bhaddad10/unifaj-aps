@@ -237,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &302096212
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1139,6 +1139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3404048320750237256, guid: c35c190cf9ee854468374aceeb1104de, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3404048320750237270, guid: c35c190cf9ee854468374aceeb1104de, type: 3}
       propertyPath: sounds.Array.size
       value: 17
@@ -1995,7 +1999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1818681118
 RectTransform:
   m_ObjectHideFlags: 0
