@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeguirCamera : MonoBehaviour
+public class FollowTarget : MonoBehaviour
 {
-    // Objeto a ser seguido
     public GameObject targetObject;
-    // Variavel para auxiliar a mudança de posição da câmera para melhorar o ângulo
+    // offset
     private Vector3 offset;
 
     void Start()
     {
-        // Salva o offset entre o objeto e a câmera
+        // saves current offset
         offset = transform.position - targetObject.transform.position;
     }
 
-    // Atualiza a posição da câmera com base no objeto referenciado
+    // follows target
     void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, targetObject.transform.position.z + offset.z);
