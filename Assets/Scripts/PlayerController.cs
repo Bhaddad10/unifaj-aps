@@ -56,49 +56,54 @@ public class PlayerController: MonoBehaviour
 
     private void Start()
     {
+        // set default values
         normalScale = transform.localScale;
         targetScale = normalScale;
 
         _rigidbody = GetComponent<Rigidbody>();
 
+        // invoke repeating walk-sounds
+        // and score count
         InvokeRepeating("Walk", .25f, .25f);
         InvokeRepeating("ScoreCount", .05f, .05f);
     }
     private void Update()
     {
+        // if is dead, ignore input
         if (isDead)
             return;
-        // Controles
+
+        // Controls
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // Movimenta��o entre as faixas
-        // Se setas esquerda/direita, aplique a altera��o de lane
+        // Lane-switching
+        // If left/right arrows, change lane
         if (Input.GetKeyDown(KeyCode.LeftArrow)) ChangeLane(-1);
         if (Input.GetKeyDown(KeyCode.RightArrow))  ChangeLane(+1);
 
         //transform.position = new Vector3(lanes[currentLane], transform.position.y, transform.position.z);
-
-
-        // Pulo do player
-        // Se est� pressionando bot�o de pulo (ou setas para cima), e est� no ch�o
+        // Jump
+        // If Jump button, and is grounded, jump
         if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded())
         {
+            // if ducking, cancel ducking before jumping
             if (isDucking)
             {
-                Debug.Log("Jumping when ducking");
+                // override get-backup schedule to now
                 StopCoroutine(getBackUpCoroutine);
                 GetBackUp();
             }
             isJumping = true;
         }
 
-        // Se est� pressionando seta baixo, e n�o est� no ch�o
+        // If down arrow and jumping, dash down
         if (Input.GetKeyDown(KeyCode.DownArrow) && !isGrounded())
         {
             isDashingDown = true;
         }
 
+        // if down arrow, but grounded, duck
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded() && !isDucking)
         {
             isDucking = true;
@@ -106,26 +111,27 @@ public class PlayerController: MonoBehaviour
             DoGetBackUp(duckingTime);
         }
 
+        // resize player
         if (transform.localScale.y != targetScale.y)
         {
             transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, targetScale.y, 10f * Time.deltaTime), transform.localScale.z);
         }
     }
 
-    // M�todo para evitar que a currentLane ultrapasse os limites (0 e 2)
+    // Change lanes (limit to 0 to 2)
     private void ChangeLane(int diff)
     {
-        // Indo para lane da esquerda
+        // Going left
         if (diff < 0)
             currentLane = Math.Max(currentLane + diff, 0);
 
-        // Indo para lane da direita
+        // Going right
         if (diff > 0)
             currentLane = Math.Min(currentLane + diff, 2);
     }
 
 
-    // M�todo retorna se player est� no ch�o
+    // is player on ground
     bool isGrounded()
     {
         return Physics.CheckSphere(groundChecker.position, 0.1f, ground);
@@ -133,13 +139,13 @@ public class PlayerController: MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Movimenta��o Autom�tica para Frente
+        // Move forward
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, speed);
 
+        // changing lanes 'animation'
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, lanes[currentLane], .2f), transform.position.y, transform.position.z);
 
-
-
+        // process jumping/dashing down requests:
         if (isJumping)
         {
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
@@ -152,7 +158,7 @@ public class PlayerController: MonoBehaviour
             isDashingDown = false;
         }
 
-        // Cair mais r�pido
+        // Fall faster
         if (_rigidbody.velocity.y < 0)
         {
             _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
@@ -163,10 +169,10 @@ public class PlayerController: MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        // Ao collidir trigger com um objeto
+        // On Trigger
         GameObject other = collision.gameObject;
 
-        // Se for uma moeda, coleta-a
+        // collect coin/powerup
         if (other.CompareTag("Coin"))
         {
             GetCoin(other);
@@ -180,29 +186,29 @@ public class PlayerController: MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Ao colidir com um objeto
+        // On Collide
         GameObject other = collision.gameObject;
 
-        // Se for um espinho, reseta o jogador para posi��o inicial
-        if (other.CompareTag("Spike") || other.CompareTag("Obstacle"))
+        // if obstacle, defeat
+        if (other.CompareTag("Obstacle"))
         {
-            ResetLevel();
-        }
-
-        // Se for a linha de chegada, exibe texto de finaliza��o da fase
-        if (other.CompareTag("Finish"))
-        {
-            GameManager.Instance.ShowEndingDialog(score, coins);
-            //AudioManager.instance.Play("dieSound");
-            //StartCoroutine(DoPlayDie());
-            //speed = 0;
+            Defeat();
         }
     }
 
-    private void ResetLevel()
+    private void Defeat()
     {
+        // stop sounds
         AudioManager.Instance.StopAll();
+
+        // play die sounds
         StartCoroutine(DoPlayDie());
+
+        // stop coroutines
+        CancelInvoke("Walk");
+        CancelInvoke("ScoreCount");
+
+        // stop player altogether
         speed = 0;
         Destroy(GetComponent<CapsuleCollider>());
         Destroy(GetComponent<BoxCollider>());
@@ -211,13 +217,8 @@ public class PlayerController: MonoBehaviour
         _rigidbody.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         isDead = true;
         GetComponentInChildren<Animator>().enabled = false;
-
-        // stop walk sound
-        CancelInvoke("Walk");
-        CancelInvoke("ScoreCount");
     }
 
-    // destr�i a moeda e adiciona ao contador de moedas do player
     private void GetCoin(GameObject other)
     {
         Destroy(other);
@@ -242,26 +243,30 @@ public class PlayerController: MonoBehaviour
 
     IEnumerator GetBackUpEnumerator(float delayTime)
     {
-        //Wait for the specified delay time before continuing.
+        // Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
         GetBackUp();
     }
 
     void GetBackUp()
     {
-        //Do the action after the delay time has finished.
+        // Get back up after the delay time has finished
         targetScale = normalScale;
         isDucking = false;
     }
 
+    // InvokedRepeating
     void Walk()
     {
+        // play a footstep if on ground
         if (isGrounded())
             AudioManager.Instance.PlayWalk();
     }
 
+    // InvokedRepeating
     void ScoreCount()
     {
+        // count and update score
         score += 1;
         GameManager.Instance.UpdateInGameInfoDialog(score, coins, multiplier);
         GameManager.Instance.UpdateInGamePowerUpInfoDialog();
@@ -270,14 +275,19 @@ public class PlayerController: MonoBehaviour
 
     IEnumerator DoPlayDie()
     {
+        // play die theme
         AudioManager.Instance.Play("dieSound");
-        //Wait for the specified delay time before continuing.
+        
+        // Wait 2 seconds
         yield return new WaitForSeconds(2f);
+        // play kill & show body
         AudioManager.Instance.Play("die");
         playerBody.SetActive(false);
         playerDeadBody.SetActive(true);
 
+        // Wait 2 seconds
         yield return new WaitForSeconds(2f);
+        // Play loose theme & show dialog
         AudioManager.Instance.Play("loose");
         GameManager.Instance.ShowEndingDialog(score, coins);
 
