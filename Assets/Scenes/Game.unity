@@ -2692,7 +2692,7 @@ PrefabInstance:
       objectReference: {fileID: 1450216736}
     - target: {fileID: 4567138867624381, guid: 310df8ebe9d05bd4fac32c8a6e35f9c4, type: 3}
       propertyPath: isGameThemeEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3267441378999124431, guid: 310df8ebe9d05bd4fac32c8a6e35f9c4, type: 3}
       propertyPath: m_Name
