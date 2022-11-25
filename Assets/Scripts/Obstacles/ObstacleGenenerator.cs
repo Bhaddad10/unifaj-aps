@@ -4,32 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+// Generates random objects procedurally
 public class ObstacleGenenerator : MonoBehaviour
 {
+    // Editor parameters
     public float distance = 20f;
     public float objectArea = 10f;
     public float safeArea = 10f;
 
     public float offset = 20f;
 
+    // Lanes x-position
     float[] lanes = { -6.5f, 0f, 6.5f };
 
+    // Obstacles and coins used by the generator
     public List<Obstacle> obstacles;
     public GameObject jumpCoins;
     public GameObject coins;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        //When player collides, generate obstacles, and move the next trigger forward
         if (other.CompareTag("Player"))
         {
             Vector3 generateFrom = gameObject.transform.position;
@@ -40,16 +35,18 @@ public class ObstacleGenenerator : MonoBehaviour
 
     private void GenerateObstacles(Vector3 generateFrom)
     {
+        // for each step
         for (float zObstacle = generateFrom.z + objectArea; zObstacle <= generateFrom.z + distance + objectArea; zObstacle += objectArea)
         {
+            // decide which lanes are going to have obstacles
             int lane1 = Random.Range(0, 3);
-
             int lane2 = Random.Range(0, 3);
             while (lane2 == lane1)
             {
                 lane2 = Random.Range(0, 3);
             }
 
+            // generate both obstacles
             GenerateObstacle(lane1, zObstacle);
             GenerateObstacle(lane2, zObstacle);
         }
@@ -59,49 +56,52 @@ public class ObstacleGenenerator : MonoBehaviour
     {
         Vector3 p = new Vector3(lanes[lane], 0, zObstacle);
 
-
+        // Instantiate a random obstacle from the list
         Obstacle obstacleProperties = obstacles[Random.Range(0, obstacles.Count)];
         GameObject obstacleToSpawn = obstacleProperties.obstacle;
         GameObject obstacle = Instantiate(obstacleToSpawn);
         obstacle.transform.position = p;
 
+        // if obstacle is probability dependent
         if (obstacleProperties.hasProbability)
         {
             if (Random.value < obstacleProperties.probability)
             {
-                InstObjectAtPos(obstacle, p);
+                InsantiatetObjectAtPos(obstacle, p);
             }
         }
 
+        // if obstacle allows coins, generate it
         if (obstacleProperties.allowCoins && obstacleProperties.allowJumpCoins)
         {
             int result = Random.Range(0, 3);
             switch (result)
             {
                 case 0:
-                    InstObjectAtPos(coins, p);
+                    InsantiatetObjectAtPos(coins, p);
                     break;
                 case 1:
-                    InstObjectAtPos(jumpCoins, p);
+                    InsantiatetObjectAtPos(jumpCoins, p);
                     break;
             }
         } else if (obstacleProperties.allowCoins) {
             if (Random.value <= 0.5f)
-                InstObjectAtPos(coins, p);
+                InsantiatetObjectAtPos(coins, p);
         } else if (obstacleProperties.allowJumpCoins) {
             if (Random.value <= 0.5f)
-                InstObjectAtPos(jumpCoins, p);
+                InsantiatetObjectAtPos(jumpCoins, p);
         }
 
 
     }
 
-    private void InstObjectAtPos(GameObject prefab, Vector3 pos)
+    private void InsantiatetObjectAtPos(GameObject prefab, Vector3 pos)
     {
         GameObject obstacle = Instantiate(prefab);
         obstacle.transform.position = pos;
     }
 
+    // Defines an obstacle and its properties to be edited at Unity Editor
     [Serializable]
     public class Obstacle
     {
