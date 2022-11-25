@@ -3,19 +3,21 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+// Manages playing/stopping Audio in an easy way
 public class AudioManager : MonoBehaviour
 {
+    // Editor saves the sounds to be used
     public Sound[] sounds;
 
-
-    public static AudioManager instance;
+    // Singleton
+    public static AudioManager Instance;
     void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
         else
         {
-            Destroy(instance);
+            Destroy(Instance);
             return;
         }
         DontDestroyOnLoad(gameObject);
@@ -30,13 +32,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    // Plays sound 'name'
+    public void Play(string name)
     {
-        //Play("theme");
+        PlayDelayed(name);
     }
 
-
-
+    // Plays sound 'name' after a delay of 'delay' seconds
     public void PlayDelayed(string name, float delay = 0f)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -49,11 +51,7 @@ public class AudioManager : MonoBehaviour
         s.source.PlayDelayed(delay);
     }
 
-    public void Play(string name)
-    {
-        PlayDelayed(name);
-    }
-
+    // Stop playing sound 'name' 
     internal void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -66,7 +64,7 @@ public class AudioManager : MonoBehaviour
         s.source.Stop();
     }
 
-    // For default values
+    // Reset() allows for easier managing on UI
     private void Reset()
     {
         sounds = new Sound[]
@@ -75,11 +73,13 @@ public class AudioManager : MonoBehaviour
         };
     }
 
+    // Plays one of the 8 footstep sounds at random
     internal void PlayWalk()
     {
         Play("FootstepMetal0" + Random.Range(1, 9));
     }
 
+    // Stops all sounds
     internal void StopAll()
     {
         foreach (Sound sound in sounds)
