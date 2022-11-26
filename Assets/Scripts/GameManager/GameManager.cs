@@ -11,6 +11,9 @@ public class GameManager : IPersistentSingleton<GameManager>
     // GUI Dialogs (GameManager is responsible for showing/hiding these dialogs during game)
     GameObject EndingDialog;
     GameObject InGameInfoDialog;
+
+    // Controls if there is theme song
+    public bool isGameThemeEnabled;
     
     // PlayerController reference, so scripts can get its stats
     public PlayerController player;
@@ -19,7 +22,8 @@ public class GameManager : IPersistentSingleton<GameManager>
     {
         // When game is started, ambient and/or theme starts
         AudioManager.Instance.Play("AmbientHallway");
-        AudioManager.Instance.Play("GameTheme");
+        if (isGameThemeEnabled)
+            AudioManager.Instance.Play("GameTheme");
     }
 
     // UiMenu call this method on Start of scene, populating the dialogs to the right value

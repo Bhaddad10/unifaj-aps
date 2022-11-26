@@ -44,9 +44,105 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
+  - name: FootstepMetal01
+    clip: {fileID: 8300000, guid: e5b816ceaa8abd348b0d728f0d5fff5d, type: 3}
     volume: 0.8
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal02
+    clip: {fileID: 8300000, guid: 41044ff066472e640abe9f5c82508e12, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal03
+    clip: {fileID: 8300000, guid: 6c04556c487e2044bbb5c48ec4898386, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal04
+    clip: {fileID: 8300000, guid: 391597e2f4136a14c81853c2c0fbc8d7, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal05
+    clip: {fileID: 8300000, guid: d1869b8467b23744bbf5baaa319b7b72, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal06
+    clip: {fileID: 8300000, guid: ccd983ef5442436409bd6245ab7f45c2, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal07
+    clip: {fileID: 8300000, guid: 447a3dd47b0ff994cb6392f1955d5527, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FootstepMetal08
+    clip: {fileID: 8300000, guid: 570bed71133cf5f4bb80cf1901426f7d, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: die
+    clip: {fileID: 8300000, guid: 2c90089d1acf3614788859e3b240d393, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: dieSound
+    clip: {fileID: 8300000, guid: a52ea9d1cdaa3dc4eb101cefdd39bb2a, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: loose
+    clip: {fileID: 8300000, guid: 0b15cb7a4e80a044198cac3116f0f18e, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: getCoin
+    clip: {fileID: 8300000, guid: ee9e68e612c950041a3f5b23eca0c6a8, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: getPowerUp
+    clip: {fileID: 8300000, guid: 477b048426396cc4fa3c6dae52c89176, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AmbientHallway
+    clip: {fileID: 8300000, guid: 0cc409b7758856642b7144002d4b4317, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: uiClick
+    clip: {fileID: 8300000, guid: 87f60b2bb2d57f648a0bbf3c801c67f4, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: HomeTheme
+    clip: {fileID: 8300000, guid: 1f17c6f34353f6d408624810343e28b0, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: GameTheme
+    clip: {fileID: 8300000, guid: 3b5f9432b0f325d4d901591620e7e96d, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
     source: {fileID: 0}

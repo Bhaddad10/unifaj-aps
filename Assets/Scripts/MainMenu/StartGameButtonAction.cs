@@ -11,7 +11,7 @@ public class StartGameButtonAction : MonoBehaviour
     private void Awake()
     {
         if (AudioManager.Instance)
-            AudioManager.Instance.Stop("GameTheme");
+            AudioManager.Instance.StopAll();
     }
 
     // Start playing HomeTheme
