@@ -1,6 +1,8 @@
 using UnityEngine.Audio;
 using UnityEngine;
 
+// Stores sound attributes such as name, clip, volume, pitch, loop or not
+// Represented at unity editor
 [System.Serializable]
 public class Sound
 {
